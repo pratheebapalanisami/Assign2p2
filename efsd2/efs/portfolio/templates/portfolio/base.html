@@ -45,7 +45,8 @@
 
                     <li><a class="nav-link lead" href="{% url 'logout' %}"><span class="fa fa-btn fa-sign-out"></span>Logout</a></li>
                 {% else %}
-                    <li><a class="nav-link lead" href="{% url 'social:begin' 'google-oauth2' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                    <li><a class="nav-link lead" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                    <li><a class="nav-link lead" href="{% url 'social:begin' 'google-oauth2' %}"><span class="glyphicon glyphicon-log-in"></span>Login with Google</a></li>
                     <li><a class="nav-link lead" href="{% url 'register' %}">Sign Up</a></li>
                 {% endif %}
 
