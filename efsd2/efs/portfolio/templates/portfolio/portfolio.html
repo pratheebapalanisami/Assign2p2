@@ -1,0 +1,222 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% load humanize %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+    <meta charset="UTF-8">
+    <title>Eagle Financial Services</title>
+</head>
+<body>
+ <header class="jumbotron my-4 table-responsive" style="background: white">
+      <p class="lead text-nowrap"><b>Eagle Financial Services, your Midwest Financial Services Partner</b></p>
+ </header>
+<div class="row">
+    <h2 class="navbar-brand" style="padding-left: 15Px">Customer Portfolio</h2>
+</div>
+
+
+<div class="row">
+    <h2 class="navbar-brand" style="padding-left: 15Px">Overall Portfolio Performance</h2>
+</div>
+
+<div >
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+            <th>Portfolio Initial Investments - USD</th>
+            <th>Portfolio Initial Investments - INR</th>
+            <th>Portfolio Current Investments - USD</th>
+            <th>Portfolio Current Investments - INR</th>
+            <th>Grand Total Results - USD</th>
+            <th>Grand Total Results - INR</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ portfolio_initial_investments|intcomma }}</td>
+                <td>{{ new_portfolio_initial_investments|intcomma }}</td>
+                <td>{{ portfolio_current_investments|intcomma }}</td>
+                <td>{{ new_portfolio_current_investments|intcomma }}</td>
+                <td>{{ portfolio_current_investments|sub:portfolio_initial_investments|intcomma  }}</td>
+                <td>{{ new_portfolio_current_investments|sub:new_portfolio_initial_investments|intcomma  }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="row">
+    <h2 class="navbar-brand" style="padding-left: 15Px">Stocks Information</h2>
+</div>
+<div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+            <th>Customer</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>Initial Stock Price</th>
+            <th>Initial Stock Value</th>
+            <th>Current Stock Price</th>
+            <th>Current Stock Value</th>
+            <th>Results</th>
+        </tr>
+        </thead>
+        <tbody>
+   {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.customer }}</td>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.name }}</td>
+                <td>{{ stock.shares|intcomma }}</td>
+                <td>{{ stock.purchase_price|intcomma}}</td>
+                <td>{{ stock.initial_stock_value|intcomma}}
+                <td>{{ stock.current_stock_price|intcomma}}
+                <td>{{ stock.current_stock_value|intcomma}}
+                <td>{{ stock.current_stock_value|sub:stock.initial_stock_value }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+            <th>Total of Initial Stocks</th>
+            <th>Total of Current Stocks</th>
+            <th>Results</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ sum_current_stocks_value }}</td>
+                <td>{{ sum_of_initial_stock_value}}</td>
+                <td>{{ sum_current_stocks_value|sub:sum_of_initial_stock_value }}</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+<div class="row">
+    <h2 style="padding-left: 15Px">Investments Information</h2>
+</div>
+<div >
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+            <th>Customer</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Acquired Value</th>
+            <th>Acquired Date</th>
+            <th>Recent Value</th>
+            <th>Recent Date</th>
+            <th>Results</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for investment in investments %}
+            <tr>
+                <td>{{ investment.customer }}</td>
+                <td>{{ investment.category }}</td>
+                <td>{{ investment.description }}</td>
+                <td>{{ investment.acquired_value }}</td>
+                <td>{{ investment.acquired_date }}</td>
+                <td>{{ investment.recent_value }}</td>
+                <td>{{ investment.recent_date }}</td>
+                <td>{{ investment.recent_value|sub:investment.acquired_value }}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+            <th>Total of Initial Investments</th>
+            <th>Total of Current Investments</th>
+            <th>Results</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ sum_acquired_value }}</td>
+                <td>{{ sum_recent_value}}</td>
+                <td>{{ sum_recent_value|sub:sum_acquired_value }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+<div class="row">
+    <h2 style="padding-left: 15Px">Mutual Fund Information</h2>
+</div>
+<div >
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+            <th>Customer</th>
+            <th>Bond Type</th>
+            <th>Description</th>
+            <th>Acquired Value</th>
+            <th>Acquired Date</th>
+            <th>Recent Value</th>
+            <th>Recent Date</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for mutualfund in mutualfunds %}
+            <tr>
+                <td>{{ mutualfund.customer }}</td>
+                <td>{{ mutualfund.bondtype }}</td>
+                <td>{{ mutualfund.description }}</td>
+                <td>{{ mutualfund.acquired_value|intcomma }}</td>
+                <td>{{ mutualfund.acquired_date }}</td>
+                <td>{{ mutualfund.recent_value|intcomma }}</td>
+                <td>{{ mutualfund.recent_date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr class="bg-info">
+
+            <th>Total of Initial Mutual Funds</th>
+            <th>Total of Current Mutual Funds</th>
+            <th>Results</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ sum_acquired_value_mf|intcomma }}</td>
+                <td>{{ sum_recent_value_mf|intcomma }}</td>
+                <td>{{ sum_recent_value_mf|sub:sum_acquired_value_mf|intcomma }}</td>
+            </tr></tr>
+        </tbody>
+    </table>
+</div>
+    <a style="text-align:right;" href="{% url 'portfolio:render_to_pdf' pk=customer.pk%}">Download and Email Report</a>
+</body>
+
+{% endblock %}
+
+

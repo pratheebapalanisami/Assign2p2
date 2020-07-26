@@ -1,0 +1,71 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<body>
+<style>
+
+        body {
+            background-color: beige;
+        }
+</style>
+
+  <header class="jumbotron my-4 table-responsive" style="background: white">
+      <p class="lead text-nowrap"><b>Eagle Financial Services, your Midwest Financial Services Partner</b></p>
+         </header>
+
+<div class="row"><br>
+
+    <h2 style="padding-left: 15Px"><u>Customer Information</u></h2>
+    </div>
+    <div>
+        <table class="table table-hover table-responsive-lg text-center">
+            <thead>
+            <tr bgcolor="white">
+                <th>Customer Number</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Primary Email</th>
+                <th>Cell Phone</th>
+                <th colspan="4">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for customer in customers %}
+                <tr bgcolor="white">
+                    <td>{{ customer.cust_number }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.city }}</td>
+                    <td>{{ customer.state }}</td>
+                    <td>{{ customer.zipcode }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.cell_phone }}</td>
+                    <td><a href="{% url 'portfolio:customer_edit' pk=customer.pk %}" class="btn btn-warning">Edit</a>
+                    <td><a href="{% url 'portfolio:customer_delete' pk=customer.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')"
+                           class="btn btn-danger">Delete</a>
+                    </td>
+                    <td><a href="{% url 'portfolio:portfolio' pk=customer.pk %}"
+                           class="btn btn-primary">Portfolio</a></td>
+                     <td><a href="{% url 'portfolio:piechart' pk=customer.pk %}"
+                            class="btn btn-primary">Summary</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+                <div class="row">
+                    <a href="{% url 'portfolio:customer_new' %}" class="row"><span
+                            class="btn btn-primary">Add Customer</span></a>
+                </div>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}
